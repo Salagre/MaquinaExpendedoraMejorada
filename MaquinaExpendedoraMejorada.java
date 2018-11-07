@@ -12,18 +12,21 @@ public class MaquinaExpendedoraMejorada {
     private String estacionDestino;
 
     private boolean premio;
+    
+    private int billetes;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean maquinaConPremio) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean maquinaConPremio, int numBilletes) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
         estacionDestino = destino;
         premio = maquinaConPremio;
+        billetes = numBilletes;
     }
 
     /**
@@ -56,6 +59,7 @@ public class MaquinaExpendedoraMejorada {
      * Imprime un billete para el cliente actual
      */
     public void imprimirBillete() {
+       if(billetes > 0){
         if(balanceClienteActual >= precioBillete) {        
             // Simula la impresion de un billete
             System.out.println("##################");
@@ -69,17 +73,23 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
+            billetes = billetes - 1;
                 if(premio == true){
                 System.out.println("este billete puede tener premio");
             System.out.println("numero boleto:0001");
         }
-        }
+    }
+        
         else {
             System.out.println("Necesitas introducir " + (precioBillete - balanceClienteActual) + " euros mas!");
                     
         }            
     }
-    
+
+    else{
+    System.out.println("No quedan billetes");
+    }
+}
     /**
      * Cancela la operacion de compra del cliente actual y le
      * devuelve al cliente el dinero que ha introducido hasta el momento
