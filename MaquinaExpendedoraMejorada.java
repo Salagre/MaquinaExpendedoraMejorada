@@ -11,17 +11,19 @@ public class MaquinaExpendedoraMejorada {
     // El destino del billete
     private String estacionDestino;
 
+    private boolean premio;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean maquinaConPremio) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
         estacionDestino = destino;
+        premio = maquinaConPremio;
     }
 
     /**
@@ -67,6 +69,10 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
+                if(premio == true){
+                System.out.println("este billete puede tener premio");
+            System.out.println("numero boleto:0001");
+        }
         }
         else {
             System.out.println("Necesitas introducir " + (precioBillete - balanceClienteActual) + " euros mas!");
@@ -87,16 +93,19 @@ public class MaquinaExpendedoraMejorada {
     } 
     
     public int vaciarDineroDeLaMaquina() {
-       if(balanceClienteActual <= 0){
-            System.out.println("No has ingresado dinero");
-            return -1;
-        }
-       else{
-           int dineroAVaciar;
+       int dineroAVaciar;
+        if(balanceClienteActual <= 0){
+           
            dineroAVaciar = totalDineroAcumulado + balanceClienteActual;
            totalDineroAcumulado = 0;
            balanceClienteActual = 0;
            return dineroAVaciar;
+
+        }
+       else{
+           System.out.println("No has ingresado dinero");
+           dineroAVaciar = -1;
        }
+       return dineroAVaciar;
     }
 }
